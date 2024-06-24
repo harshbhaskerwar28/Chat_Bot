@@ -138,20 +138,9 @@ plt.show()
 ```
 
 2. Draw a Use case diagram to withdraw amount from ATM.
-```plaintext
-Title: Use Case Diagram for ATM Withdrawal
 
-Actor: User
-Use Case: Authenticate User
-Use Case: Select Transaction
-Use Case: Withdraw Cash
-Use Case: Print Receipt
+![Alt test](https://www.google.com/search?client=ms-android-oppo-rvo3&sca_esv=fdded5f414667f33&sxsrf=ADLYWIL3Y0UGmDROqvmXk0P2s3cpEw6LBQ:1719232522094&q=Use+case+diagram+to+withdraw+amount+from+ATM.&udm=2&fbs=AEQNm0BKxFXqFZETuC92mLOmXO9xTuwl7LTqpjEikSHB2sNnAo_Nt6_jBoO5j_EG4ZXs8aQCufxT5WhqKxk_t3EFVMM67rI6i01ADbZ-a5wYaAsalDcO6S1GH-LO2-BpNO0GjKIvvxoXnjjP08V8RmhXnS3ZTYi7mGxclhyNM7kU-cEZojmfYb66zxZupqQ3TpTT-qjAIEt1CwlZuUTZOKSe8wS1nEmI6w&sa=X&ved=2ahUKEwia3Y-eoPSGAxUXUWcHHXN5CrEQtKgLegQIERAB&biw=360&bih=708&dpr=3#vhid=K9okCfF7P6HACM&vssid=mosaic)
 
-User->(Authenticate User)
-User->(Select Transaction)
-User->(Withdraw Cash)
-User->(Print Receipt)
-```
 SET-7
 1. Develop a model on Analysis of Variance (ANOVA) and table for the given data.
 ```python
