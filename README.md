@@ -116,21 +116,8 @@ print(multivariate)
 ```
 
 2. Draw a Sequence diagram for Library Management system.
-```plaintext
-Title: Sequence Diagram for Library Management System
 
-Participant User
-Participant LibrarySystem
-Participant Book
-Participant Database
-
-User->LibrarySystem: Request for a book
-LibrarySystem->Database: Check book availability
-Database-->LibrarySystem: Book available
-LibrarySystem->Book: Issue book
-Book-->LibrarySystem: Book issued
-LibrarySystem->User: Book issued confirmation
-```
+![Alt text](https://images.app.goo.gl/5Pzfs2oKfGdTVLUL8)
 
 SET-6
 1. Develop a model to measure covariance matrix, correlation matrix, and heat map of the given data set.
