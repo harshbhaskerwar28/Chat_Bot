@@ -1,341 +1,251 @@
-SET-1
-1. Develop a model on Analysis of Variance (ANOVA) and table for the given data.
+**SET-1**
+
+1. **Develop a model on Analysis of Variance (ANOVA) and table for the given data.**
+
 ```python
-from sklearn.datasets import load_iris
 import pandas as pd
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
+from scipy.stats import f_oneway
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
-df['species'] = data.target
+# Load the data
+data = pd.read_csv('data.csv')
 
-model = ols('sepal length (cm) ~ C(species)', data=df).fit()
-anova_table = sm.stats.anova_lm(model, typ=2)
-print(anova_table)
+# Perform one-way ANOVA
+groups = [data[data['group'] == 'A']['value'], data[data['group'] == 'B']['value'], data[data['group'] == 'C']['value']]
+f_value, p_value = f_oneway(*groups)
+
+print(f'F-value: {f_value:.2f}')
+print(f'p-value: {p_value:.4f}')
 ```
 
-2. Write a unit test cases with example.
+**SET-2**
+
+1. **Calculating the skewness of a data set by Pandas and SciPy.**
+
 ```python
-import unittest
-
-class TestANOVA(unittest.TestCase):
-    def test_anova(self):
-        self.assertTrue(anova_table['PR(>F)'][0] < 0.05)
-
-if __name__ == '__main__':
-    unittest.main()
-```
-
-SET-2
-1. Calculating the skewness of a data set by Pandas and SciPy.
-```python
+import pandas as pd
 from scipy.stats import skew
+
+# Load the data
+data = pd.read_csv('data.csv')
+
+skewness_pandas = data['value'].skew()
+print(f'Skewness (Pandas): {skewness_pandas:.2f}')
+
+skewness_scipy = skew(data['value'])
+print(f'Skewness (SciPy): {skewness_scipy:.2f}')
+```
+
+**SET-3**
+
+1. **Design a model to calculate Percentile by SciPy and Stats Models.**
+
+```python
 import pandas as pd
+from scipy.stats import percentileofscore
+import statsmodels.api as sm
 
-data = pd.Series([1, 2, 2, 3, 4, 5, 6, 6, 6, 7])
-pandas_skew = data.skew()
-scipy_skew = skew(data)
-print(pandas_skew, scipy_skew)
+# Load the data
+data = pd.read_csv('data.csv')
+
+# Calculate percentile using SciPy
+percentile_scipy = percentileofscore(data['value'], 75)
+print(f'Percentile (SciPy): {percentile_scipy}th')
+
+# Calculate percentile using StatsModels
+percentile_statsmodels = sm.DistributionDistance().percentile(data['value'], 0.75)
+print(f'Percentile (StatsModels): {percentile_statsmodels:.2f}')
 ```
 
-2. Write integration test cases with an example.
-```python
-import unittest
+**SET-4**
 
-class TestSkewness(unittest.TestCase):
-    def test_skewness(self):
-        self.assertAlmostEqual(pandas_skew, scipy_skew, places=5)
+1. **Develop a model to find the variance and standard deviation of univariate statistics measures by using Pandas.**
 
-if __name__ == '__main__':
-    unittest.main()
-```
-
-SET-3
-1. Design a model to calculate Percentile by SciPy and Stats Models.
-```python
-from scipy.stats import scoreatpercentile
-import numpy as np
-
-data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-percentile_25 = scoreatpercentile(data, 25)
-percentile_75 = scoreatpercentile(data, 75)
-print(percentile_25, percentile_75)
-```
-
-2. Develop white box testing cases with example.
-```python
-import unittest
-
-class TestPercentile(unittest.TestCase):
-    def test_percentile(self):
-        self.assertEqual(percentile_25, 3.25)
-        self.assertEqual(percentile_75, 7.75)
-
-if __name__ == '__main__':
-    unittest.main()
-```
-
-SET-4
-1. Develop a model to find the variance and standard deviation of univariate statistics measures by using Pandas.
 ```python
 import pandas as pd
 
-data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-variance = data.var()
-std_dev = data.std()
-print(variance, std_dev)
+# Load the data
+data = pd.read_csv('data.csv')
+
+# Calculate variance and standard deviation using Pandas
+variance = data['value'].var()
+std_dev = data['value'].std()
+
+print(f'Variance: {variance:.2f}')
+print(f'Standard Deviation: {std_dev:.2f}')
 ```
 
-2. Develop black box testing cases with example.
-```python
-import unittest
+**SET-5**
 
-class TestUnivariateStatistics(unittest.TestCase):
-    def test_statistics(self):
-        self.assertAlmostEqual(variance, 9.166666666666666)
-        self.assertAlmostEqual(std_dev, 3.0276503540974917)
+1. **Demo on Bivariate and Multivariate Descriptive Statistics measures.**
 
-if __name__ == '__main__':
-    unittest.main()
-```
-
-SET-5
-1. Demo on Bivariate and Multivariate Descriptive Statistics measures.
 ```python
 import pandas as pd
-from sklearn.datasets import load_iris
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
+# Load the data
+data = pd.read_csv('data.csv')
 
-bivariate = df.corr()
-multivariate = df.describe()
-print(bivariate)
-print(multivariate)
+# Calculate bivariate descriptive statistics
+bivariate_stats = data[['column1', 'column2']].describe()
+print('Bivariate Descriptive Statistics:')
+print(bivariate_stats)
+
+# Calculate multivariate descriptive statistics
+multivariate_stats = data.describe()
+print('\nMultivariate Descriptive Statistics:')
+print(multivariate_stats)
 ```
 
-2. Draw a Sequence diagram for Library Management system.
+**SET-6**
 
-![Alt text](https://images.app.goo.gl/5Pzfs2oKfGdTVLUL8)
+1. **Develop a model to measure covariance matrix, correlation matrix, and heat map of the given data set.**
 
-SET-6
-1. Develop a model to measure covariance matrix, correlation matrix, and heat map of the given data set.
 ```python
+import pandas as pd
 import seaborn as sns
-import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.datasets import load_iris
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
+# Load the data
+data = pd.read_csv('data.csv')
 
-cov_matrix = df.cov()
-corr_matrix = df.corr()
+# Calculate covariance matrix
+covariance_matrix = data.cov()
+print('Covariance Matrix:')
+print(covariance_matrix)
 
-sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
+# Calculate correlation matrix
+correlation_matrix = data.corr()
+print('\nCorrelation Matrix:')
+print(correlation_matrix)
+
+# Plot heat map
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Heat Map')
 plt.show()
 ```
 
-2. Draw a Use case diagram to withdraw amount from ATM.
+**SET-7**
 
-![Alt test](https://www.google.com/search?client=ms-android-oppo-rvo3&sca_esv=fdded5f414667f33&sxsrf=ADLYWIL3Y0UGmDROqvmXk0P2s3cpEw6LBQ:1719232522094&q=Use+case+diagram+to+withdraw+amount+from+ATM.&udm=2&fbs=AEQNm0BKxFXqFZETuC92mLOmXO9xTuwl7LTqpjEikSHB2sNnAo_Nt6_jBoO5j_EG4ZXs8aQCufxT5WhqKxk_t3EFVMM67rI6i01ADbZ-a5wYaAsalDcO6S1GH-LO2-BpNO0GjKIvvxoXnjjP08V8RmhXnS3ZTYi7mGxclhyNM7kU-cEZojmfYb66zxZupqQ3TpTT-qjAIEt1CwlZuUTZOKSe8wS1nEmI6w&sa=X&ved=2ahUKEwia3Y-eoPSGAxUXUWcHHXN5CrEQtKgLegQIERAB&biw=360&bih=708&dpr=3#vhid=K9okCfF7P6HACM&vssid=mosaic)
+1. **Develop a model on Analysis of Variance (ANOVA) and table for the given data.**
 
-SET-7
-1. Develop a model on Analysis of Variance (ANOVA) and table for the given data.
 ```python
-from sklearn.datasets import load_iris
 import pandas as pd
-import statsmodels.api as sm
-from statsmodels.formula.api import ols
+from scipy.stats import f_oneway
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
-df['species'] = data.target
+# Load the data
+data = pd.read_csv('data.csv')
 
-model = ols('sepal length (cm) ~ C(species)', data=df).fit()
-anova_table = sm.stats.anova_lm(model, typ=2)
-print(anova_table)
+# Perform one-way ANOVA
+groups = [data[data['group'] == 'A']['value'], data[data['group'] == 'B']['value'], data[data['group'] == 'C']['value']]
+f_value, p_value = f_oneway(*groups)
+
+print(f'F-value: {f_value:.2f}')
+print(f'p-value: {p_value:.4f}')
 ```
 
-2. Draw an Activity diagram for Online Course Management System.
-```plaintext
-Title: Activity Diagram for Online Course Management System
+**SET-8**
 
-Start
-    -> Browse Courses
-    -> Select Course
-    [if Registered] 
-        -> Access Course Material
-        -> Take Assessments
-        [if Pass] 
-            -> Receive Certificate
-            -> End
-        [else] 
-            -> Retry Assessments
-            -> End
-    [else] 
-        -> Register for Course
-        -> End
-```
+1. **Calculating the skewness of a data set by Pandas and SciPy.**
 
-SET-8
-1. Calculating the skewness of a data set by Pandas and SciPy.
 ```python
+import pandas as pd
 from scipy.stats import skew
-import pandas as pd
 
-data = pd.Series([1, 2, 2, 3, 4, 5, 6, 6, 6, 7])
-pandas_skew = data.skew()
-scipy_skew = skew(data)
-print(pandas_skew, scipy_skew)
+# Load the data
+data = pd.read_csv('data.csv')
+
+skewness_pandas = data['value'].skew()
+print(f'Skewness (Pandas): {skewness_pandas:.2f}')
+
+skewness_scipy = skew(data['value'])
+print(f'Skewness (SciPy): {skewness_scipy:.2f}')
 ```
 
-2. Draw a Class Diagram for Railway Management System.
-```plaintext
-Title: Class Diagram for Railway Management System
+**SET-9**
 
-Class Train
-    + trainNumber: int
-    + name: String
-    + type: String
-    + capacity: int
-    + getDetails(): void
+1. **Design a model to calculate Percentile by SciPy and Stats Models.**
 
-Class Station
-    + stationCode: String
-    + name: String
-    + location: String
-    + getSchedule(): void
-
-Class Ticket
-    + ticketNumber: int
-    + passengerName: String
-    + trainNumber: int
-    + seatNumber: String
-    + bookTicket(): void
-    + cancelTicket(): void
-
-Class Passenger
-    + passengerID: int
-    + name: String
-    + contactInfo: String
-    + bookTicket(): void
-    + cancelTicket(): void
-
-Train "1" -- "*" Station
-Passenger "1" -- "*" Ticket
-```
-
-SET-9
-1. Design a model to calculate Percentile by SciPy and Stats Models.
 ```python
-from scipy.stats import scoreatpercentile
-import numpy as np
+import pandas as pd
+from scipy.stats import percentileofscore
+import statsmodels.api as sm
 
-data = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-percentile_25 = scoreatpercentile(data, 25)
-percentile_75 = scoreatpercentile(data, 75)
-print(percentile_25, percentile_75)
+# Load the data
+data = pd.read_csv('data.csv')
+
+# Calculate percentile using SciPy
+percentile_scipy = percentileofscore(data['value'], 75)
+print(f'Percentile (SciPy): {percentile_scipy}th')
+
+# Calculate percentile using StatsModels
+percentile_statsmodels = sm.DistributionDistance().percentile(data['value'], 0.75)
+print(f'Percentile (StatsModels): {percentile_statsmodels:.2f}')
 ```
 
-2. Draw a State Machine Diagram for Course Selection.
-```plaintext
-Title: State Machine Diagram for Course Selection
+**SET-10**
 
-[Initial State]
-    -> Start
-    -> Browse Courses
-    [if Course Available] -> Select Course
-    [if Registered] -> Access Course
-    [else] -> Register
-    -> [End State]
-```
+1. **Develop a model to find the variance and standard deviation of univariate statistics measures by using Pandas.**
 
-SET-10
-1. Develop a model to find the variance and standard deviation of univariate statistics measures by using Pandas.
 ```python
 import pandas as pd
 
-data = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-variance = data.var()
-std_dev = data.std()
-print(variance, std_dev)
+# Load the data
+data = pd.read_csv('data.csv')
+
+# Calculate variance and standard deviation using Pandas
+variance = data['value'].var()
+std_dev = data['value'].std()
+
+print(f'Variance: {variance:.2f}')
+print(f'Standard Deviation: {std_dev:.2f}')
 ```
 
-2. Draw a Collaboration Diagram for Hospital Management System.
-```plaintext
-Title: Collaboration Diagram for Hospital Management System
+**SET-11**
 
-Patient -> Reception: Register
-Patient -> Doctor: Consultation
-Doctor -> Lab: Request Tests
-Lab -> Doctor: Send Results
-Doctor -> Patient: Prescribe Medication
-Patient -> Pharmacy: Get Medication
-```
+1. **Demo on Bivariate and Multivariate Descriptive Statistics measures.**
 
-SET-11
-1. Demo on Bivariate and Multivariate Descriptive Statistics measures.
 ```python
 import pandas as pd
-from sklearn.datasets import load_iris
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
+# Load the data
+data = pd.read_csv('data.csv')
 
-bivariate = df.corr()
-multivariate = df.describe()
-print(bivariate)
-print(multivariate)
+# Calculate bivariate descriptive statistics
+bivariate_stats = data[['column1', 'column2']].describe()
+print('Bivariate Descriptive Statistics:')
+print(bivariate_stats)
+
+# Calculate multivariate descriptive statistics
+multivariate_stats = data.describe()
+print('\nMultivariate Descriptive Statistics:')
+print(multivariate_stats)
 ```
 
-2. Draw an Activity diagram for Library Management System.
-```plaintext
-Title: Activity Diagram for Library Management System
+**SET-12**
 
-Start
-    -> Search Books
-    [if Available] -> Borrow Book
-        -> Issue Book
-        -> Read Book
-        -> Return Book
-        -> End
-    [else] -> Request Book
-        -> Wait for Availability
-        -> Borrow Book
-        -> End
-```
+1. **Develop a model to measure covariance matrix, correlation matrix, and heat map of the given data set.**
 
-SET-12
-1. Develop a model to measure covariance matrix, correlation matrix, and heat map of the given data set.
 ```python
+import pandas as pd
 import seaborn as sns
-import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.datasets import load_iris
 
-data = load_iris()
-df = pd.DataFrame(data.data, columns=data.feature_names)
+# Load the data
+data = pd.read_csv('data.csv')
 
-cov_matrix = df.cov()
-corr_matrix = df.corr()
+# Calculate covariance matrix
+covariance_matrix = data.cov()
+print('Covariance Matrix:')
+print(covariance_matrix)
 
-sns.heatmap(corr_matrix, annot=True, cmap='coolwarm')
+# Calculate correlation matrix
+correlation_matrix = data.corr()
+print('\nCorrelation Matrix:')
+print(correlation_matrix)
+
+# Plot heat map
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Heat Map')
 plt.show()
-```
-
-2. Develop test cases for unit testing.
-```python
-import unittest
-
-class TestStatistics(unittest.TestCase):
-    def test_cov_matrix(self):
-        self.assertEqual(cov_matrix.shape, (4, 4))
-    
-    def test_corr_matrix(self):
-        self.assertEqual(corr_matrix.shape, (4, 4))
-
-if __name__ == '__main__':
-    unittest.main()
 ```
