@@ -6,3 +6,4 @@
 6. [Worst-Fit Memory](code/Worst-FitMemory.c)
 7. [Best-Fit Memory](code/Best-FitMemory.c)
 8. [First-Fit Memory](code/First-FitMemoryy.c)
+9. [Paging-Memory](code/pagingmemory.c)
