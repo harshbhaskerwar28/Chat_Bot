@@ -3,3 +3,4 @@
 3. [ROUND ROBIN](code/roundrobin.c)
 4. [PRIORITY](code/priority.c)
 5. [BANKERS](code/bankers.c)
+6. [Worst-Fit Memory](code/Worst-FitMemory.c)
