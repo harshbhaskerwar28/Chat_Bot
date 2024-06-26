@@ -5,5 +5,5 @@
 5. [BANKERS](code/bankers.c)
 6. [Worst-Fit Memory](code/Worst-FitMemory.c)
 7. [Best-Fit Memory](code/Best-FitMemory.c)
-8. [First-Fit Memory](code/First-FitMemoryy.c)
+8. [First-Fit Memory](code/First-FitMemory.c)
 9. [Paging-Memory](code/pagingmemory.c)
